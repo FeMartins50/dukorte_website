@@ -52,8 +52,8 @@ export async function isEmailAvailable (email) {
 export async function loginUser (email, password) {
     try {
         let hash = stringToHash(password);
-        const user = sql.prepare("SELECT email, nome, turma FROM users WHERE email = ? AND hash = ?;").get(email, hash);
-        if (!user) {
+        const user = sql.prepare("SELECT * FROM users WHERE email = ? AND hash = ?;").get(email, hash);
+        if (!user || user.oauth == "Pending") {
             return { success: false };
         }
         return { success: true };
