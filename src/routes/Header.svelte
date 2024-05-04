@@ -1,5 +1,4 @@
 <script>
-    import { fly } from 'svelte/transition';
     import { page, navigating } from '$app/stores';
     let isMenuOpen = false;
     $: {
@@ -12,16 +11,14 @@
     <a href="/" id="mainLogo">Di Lima <span style="color: yellow; font-family: inherit">DU KORTE</span></a>
 
     <nav id="nav_in_header">
+        <a href="/agenda">Agenda</a>
         {#if !$page.data.user}
-        <a href="/agenda">Agenda</a>
         <a href="/login">Entrar</a>
-        {:else if $page.data.user.role == "Admin"}
-        <a href="/agenda">Agenda</a>
+        {:else}
+        <a href="/perfil">Perfil</a>
+        {#if $page.data.user.role == "Admin"}
         <a href="/admin">Admin</a>
-        <a href="/perfil">Perfil</a>
-        {:else if $page.data.user}
-        <a href="/agenda">Agenda</a>
-        <a href="/perfil">Perfil</a>
+        {/if}
         {/if}
     </nav>
     <!-- Menu Icon -->
@@ -56,17 +53,15 @@
 </header>
 
 {#if isMenuOpen}
-<div class="menu" in:fly|local={{ y: -700, duration: 300 }}>
+<div class="menu">
+    <a href="/agenda">Agenda</a>
     {#if !$page.data.user}
-    <a href="/agenda">Agenda</a>
     <a href="/login">Entrar</a>
-    {:else if $page.data.user.role == "Admin"}
-    <a href="/agenda">Agenda</a>
+    {:else}
+    <a href="/perfil">Perfil</a>
+    {#if $page.data.user.role == "Admin"}
     <a href="/admin">Admin</a>
-    <a href="/perfil">Perfil</a>
-    {:else if $page.data.user}
-    <a href="/agenda">Agenda</a>
-    <a href="/perfil">Perfil</a>
+    {/if}
     {/if}
 </div>
 {/if}
@@ -85,11 +80,8 @@
         align-items: center;
     }
     #mainLogo {
-        margin: 0.4em;
-        padding: 0.3em 0.6em;
-        border-radius: 0.2em;
-        background-color: rgb(94, 144, 94);
-
+        margin: 0.6em 0.2em;
+        
         font-size: 2em;
         font-family: "Protest Strike" !important;
     }
@@ -109,22 +101,16 @@
     }
     .menu {
         z-index: 1;
-        position: absolute;
         width: 100vw;
-        padding: 3.2em 0 0 0;
 
         flex-flow: column;
-        font-size: 1.8em;
+        font-size: 1.3em;
         text-align: center;
         background-color: rgb(149, 190, 149);
     }
     .menu a {
-        border-radius: .5em;
-        border-left: 2px solid yellow;
-        border-right: 2px solid yellow;
-        margin: 0.5em 1em;
-        padding: 1em 0.5em;
-        background: rgb(0, 0, 0, .1)
+        margin: 0.6em 1em;
+        padding: 1.2em 0.5em;
     }
     header button {
         margin: 1em;

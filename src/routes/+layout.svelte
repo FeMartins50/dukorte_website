@@ -26,7 +26,7 @@
     align-items: center;
     justify-content: space-between;
     min-height: 100vh;
-    background: repeating-linear-gradient(60deg, rgba(255,255,255,1) 0%, rgba(230,0,0,.1) 6%, rgba(255,255,255,1) 10%, rgba(0,0,230,.1) 16%, rgba(255,255,255,1) 20%);
+    background: white;
 }
 
 main {

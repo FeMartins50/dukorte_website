@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Lato");
+@import url("https://fonts.googleapis.com/css?family=Plus+Jakarta+Sans");
 * {
-    font-family: "Lato";
+    font-family: inherit;
     box-sizing: border-box;
     padding: 0;
     margin: 0;
@@ -24,6 +25,7 @@ p {
     font-size: 1em;
 }
 html {
+    font-family: "Lato";
     font-size: 16px;
 }
 
@@ -45,6 +47,23 @@ a, a:hover, a:visited, a:focus, a:active  {
     text-decoration: none;
     color: inherit;
     outline: 0;
+}
+
+.linkButton {
+    border-radius: 12px;
+    padding: .8em;
+    margin: 1em;
+    background-color: rgb(84, 142, 227);
+    
+    color: white !important;
+    font-family: "Plus Jakarta Sans";
+    text-align: center;
+    font-size: 1.2em;
+    transition: all 0.1s ease-in-out;
+}
+.linkButton:hover {
+    transform: scale(1.1);
+    background-color: rgb(64, 122, 227);
 }
 
 /* Forms */

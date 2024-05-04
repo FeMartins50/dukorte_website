@@ -6,7 +6,7 @@
 
     const cortes_precos = [
         ["Na máquina", "R$13.00"],
-        ["Na tesoura", "R$15.00"],
+        ["Na tesoura", "+R$3.00"],
         ["Pézin na navalha", "+R$1.00"],
         ["Sobrancelha", "+R$3.00"]
     ];
@@ -17,16 +17,16 @@
         {#if !$page.data.user}
         <h3>NÃO CONECTADO</h3>
         <p>Sem informação de perfil.</p>
-        <a class="button" href="/login"><p>FAZER LOGIN</p></a>
+        <a class="linkButton" href="/login"><p>Fazer Login</p></a>
         {:else}
         <h3>Bem vindo {$page.data.user.name}!</h3>
-        <a class="button" href="/perfil">
+        <a class="linkButton" href="/perfil">
             <p>Acessar Perfil</p>
         </a>
 
         <p>Você tem {data.pendingKortes} pagamentos pendentes.</p>
         {#if data.pendingKortes}
-        <a class="button" href="/agenda/pagamento">Verificar Pagamentos</a>
+        <a class="linkButton" href="/agenda/pagamento">Verificar Pagamentos</a>
         {/if}
 
         <div class="table">
@@ -60,7 +60,7 @@
         <br>
         <p><strong>Du Korte</strong> é a barbearia ideal para você, não importa qual for sua vontade. Seja na tesoura ou na máquina, navalhado e disfarçado, a Du Korte entrega.</p>
         <br>
-        <a class="button" href="/agenda"><p>Ver Agenda</p></a>
+        <a class="linkButton" href="/agenda"><p>Ver Agenda</p></a>
     </div>
     <div id="wrapper">
         <h3>Tabela de Preços</h3>
@@ -111,22 +111,6 @@
     .post p {
         text-align: justify;
     }
-    .button {
-        border: 4px solid rgb(104, 162, 187);
-        border-radius: 12px;
-        padding: 8px;
-        margin: 1em;
-        background-color: rgb(126, 180, 204);
-        
-        text-align: center;
-        font-size: 1.2em;
-        transition: all 0.1s ease-in-out;
-    }
-    .button:hover {
-        transform: scale(1.1);
-        background-color: rgb(106, 160, 184);
-        border-color: rgb(84, 142, 167);
-    }
 
     /* Table Custom */
     .table {
@@ -165,12 +149,14 @@
     .tbody .row:nth-child(even) { background-color: rgb(210,210,210); }
 
     #wrapper {
-        width: 800px;
+        width: 600px;
         max-width: 100%;
         margin: 1em;
         padding: 2em;
         border-radius: 2em;
+
         background-color: rgb(134, 192, 177, 0.8);
+        box-shadow: 4px 4px 4px 1px rgba(0, 0, 0, 0.2);
     }
     #wrapper h3 {
         text-align: center;
@@ -181,13 +167,12 @@
         justify-content: space-around;
     }
     .item {
+        width: 100%;
         display: flex;
         flex-flow: row;
+        justify-content: space-between;
     }
     .item p {
-        background: rgb(134, 192, 177);
-        flex: 1;
-        padding: 0.5em;
         margin: 0.5em;
     }
 </style>

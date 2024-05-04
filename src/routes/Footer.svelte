@@ -1,3 +1,7 @@
+<script>
+    import { page } from '$app/stores';
+</script>
+
 <footer>
     <div>
         <p>Contatos</p>
@@ -13,9 +17,11 @@
         <a href="/agenda">
             <p>Agenda</p>
         </a>
+        {#if $page.data.user}
         <a href="/perfil">
             <p>Perfil</p>
         </a>
+        {/if}
     </div>
     <div>
         <p>Dev: FeMartins</p>

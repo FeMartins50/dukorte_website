@@ -4,7 +4,7 @@
 </script>
 
 <section>
-    <a class="button" href="/admin/gerenciar"><h2>GERENCIAR CORTES</h2></a>
+    <a class="linkButton" href="/admin/gerenciar"><h2>GERENCIAR CORTES</h2></a>
 
     <h1>Kortes da Semana</h1>
     {#each data.week as day}
@@ -37,22 +37,6 @@
 </section>
 
 <style>
-    .button {
-        border: 4px solid rgb(104, 162, 187);
-        border-radius: 12px;
-        padding: 8px;
-        margin: 1em;
-        background-color: rgb(126, 180, 204);
-        
-        text-align: center;
-        transition: all 0.1s ease-in-out;
-    }
-    .button:hover {
-        transform: scale(1.1);
-        background-color: rgb(106, 160, 184);
-        border-color: rgb(84, 142, 167);
-    }
-
     /* Table Custom */
     .table {
         display: flex;
