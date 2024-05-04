@@ -57,14 +57,12 @@ async function sendEmail(recipients, emailSubject, emailBody) {
     try {
         const transporter = nodemailer.createTransport({
             service: "Gmail",
-            host: "smtp.gmail.com",
-            port: 465,
-            secure: true,
             auth: {
                 user: "nicholas50felix@gmail.com",
                 pass: gmailpass,
             },
         });
+        console.log('SMTP Configured');
 
         const mailOptions = {
             from: '"De Lima DU KORTE" nicholas50felix@gmail.com',
@@ -72,7 +70,7 @@ async function sendEmail(recipients, emailSubject, emailBody) {
             subject: emailSubject,
             text: emailBody
         };
-
+        console.log("Trying to send mail...");
         const info = await transporter.sendMail(mailOptions);
         console.log('Email sent:', recipients);
     } catch (error) {
