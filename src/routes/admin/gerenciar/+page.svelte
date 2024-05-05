@@ -93,37 +93,6 @@
         </div>
     
     </div>
-    <br><br><br>
-    <h2>Usuários</h2>
-    <div class="wrapper">
-        <div class="overflowContainer">
-            <div class="table" id="loginTable">
-                <div class="caption">
-                    Total de usuários registrados: {data.users.length}
-                </div>
-                {#if data.users.length}
-                <div class="thead">
-                    <div class="row">
-                        <p style="width: 25%;">Nome</p>
-                        <p style="width: 12.5%;">Turma</p>
-                        <p style="width: 12.5%;">Cargo</p>
-                        <p style="width: 50%;">E-mail</p>
-                    </div>
-                </div>
-                <div class="tbody">
-                    {#each data.users as user}
-                    <div class="row">
-                        <p style="width: 25%;">{user.nome}</p>
-                        <p style="width: 12.5%;">{user.turma}</p>
-                        <p style="width: 12.5%;">{user.role}</p>
-                        <p style="width: 50%;">{user.email}</p>
-                    </div>
-                    {/each}
-                </div>
-                {/if}
-            </div>
-        </div>
-    </div>
 </section>
 
 <style>

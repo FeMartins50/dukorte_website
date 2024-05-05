@@ -34,6 +34,8 @@
         {/if}
     </div>
     {/each}
+
+    <a class="linkButton" href="/admin/users"><h2>GERENCIAR USUÁRIOS</h2></a>
 </section>
 
 <style>

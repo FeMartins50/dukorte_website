@@ -1,4 +1,5 @@
 import { fetchBookingsByCustomer } from "$lib/server/bookings.js"
+import { getClubeInfo } from "$lib/server/clube.js";
 
 export const load = ({ locals }) => {
     const bookings = fetchBookingsByCustomer(locals.user.name+"-"+locals.user.squad);
@@ -7,15 +8,20 @@ export const load = ({ locals }) => {
     let futureKortes = [];
     let pastKortes = [];
     bookings.forEach(booking => {
-        if (booking.date.substring(0, 10) >= dayStr && booking.status == 2) {
+        if (booking.status != 2) {
+            return;
+        }
+        if (booking.date.substring(0, 10) >= dayStr) {
             futureKortes.push(booking);
         } else {
             pastKortes.push(booking);
         }
     });
 
+    const clube = getClubeInfo(locals.user.email);
     return {
         futureKortes: futureKortes,
-        pastKortes: pastKortes
+        pastKortes: pastKortes,
+        clube: clube
     }
 }

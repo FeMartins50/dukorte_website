@@ -14,10 +14,10 @@ if (!table1['count(*)']) {
 // Criar uma table de nome 'users'
 const table2 = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='users';").get();
 if (!table2['count(*)']) {
-    sql.prepare("CREATE TABLE users (email TEXT PRIMARY KEY, hash TEXT, oauth TEXT, nome TEXT, turma CHAR(3), role TEXT, sessionid TEXT, clube BOOL);").run();
+    sql.prepare("CREATE TABLE users (email TEXT PRIMARY KEY, hash TEXT, oauth TEXT, nome TEXT, turma CHAR(3), role TEXT, sessionid TEXT);").run();
 }
-// (email, hash, oauth, nome, turma, role, sessionid, clube)
-// (fnandomartins50@gmail.com, ao12o3, Google, Fernando, CVK, [role], [sessionid], true)
+// (email, hash, oauth, nome, turma, role, sessionid)
+// (fnandomartins50@gmail.com, ao12o3, Google, Fernando, CVK, [role], [sessionid])
 // role = ["User", "Admin"];
 
 // Criar uma table de nome 'payments'
@@ -37,3 +37,10 @@ if (!table4['count(*)']) {
 }
 // (uuid, email, timeout)
 // timeout = ttl
+
+// Criar uma table de nome 'clube'
+const table5 = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='clube';").get();
+if (!table5['count(*)']) {
+    sql.prepare("CREATE TABLE clube (email TEXT PRIMARY KEY, qtdcortes INT, incluidosob BOOL);").run();
+}
+// (email, qtdcortes, incluidosob)

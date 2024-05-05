@@ -1,6 +1,7 @@
 import { redirect } from "@sveltejs/kit";
 import * as bookings from "$lib/server/bookings.js";
 import * as payments from "$lib/server/payments.js";
+import * as clube from "$lib/server/clube.js";
 
 export function load ({ params, locals }) {
     if (!locals.user) {
@@ -9,7 +10,9 @@ export function load ({ params, locals }) {
     if (bookings.fetchStatus(params.date)) {
         redirect(302, "/");
     }
+    const clubeInfo = clube.getClubeInfo(locals.user.email);
     return {
+        clubeInfo: clubeInfo,
         params: params
     }
 }
@@ -29,7 +32,14 @@ export const actions = {
             JSON.stringify({ tesoura: tesoura, sobrancelha: sobrancelha, pezinho: pezinho, quarto: quarto })
         );
 
-        let value = 13 + (tesoura ? 3 : 0) + (sobrancelha ? 3 : 0) + (pezinho ? 1 : 0);
+        const clubeInfo = clube.getClubeInfo(locals.user.email);
+        let value = (clubeInfo.qtdcortes > 0 ? 0 : 13) + (tesoura ? 3 : 0) + (sobrancelha && !clubeInfo.incluidosob ? 3 : 0) + (pezinho ? 1 : 0);
+        if (value <= 0) {
+            bookings.reserveBooking (params.date);
+            clube.decrementCorte(locals.user.email);
+            redirect(302, "/perfil");
+        }
+
         let timeToLive = 15*60*1000;
         const timeout = new Date().getTime() + timeToLive;
         // UTC TIME

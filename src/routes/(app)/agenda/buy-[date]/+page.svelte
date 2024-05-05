@@ -11,7 +11,7 @@
     // day-month-year-start-end
     let tes, sob, pez;
     let total = 0;
-    $: total = 13 + (tes ? 3 : 0) + (sob ? 3 : 0) + (pez ? 1 : 0);
+    $: total = (data.clubeInfo.qtdcortes > 0 ? 0 : 13) + (tes ? 3 : 0) + (sob && !data.clubeInfo.incluidosob ? 3 : 0) + (pez ? 1 : 0);
 </script>
 
 <section>
@@ -42,6 +42,13 @@
         {#if $page.data.user.squad != "CVK"}
         <label class="roomLabel" for="quarto">Quarto</label>
         <input class="roomInput" type="number" name="quarto" required>
+        {/if}
+
+        {#if data.clubeInfo}
+        <p style="color: red">O clube pode cobrir mais {data.clubeInfo.qtdcortes} corte(s).</p>
+        {#if data.clubeInfo.incluidosob}
+        <p style="color: red; text-align: center">Se deseja sobrancelha, marque a opção "Sobrancelha?". Sua inscrição no clube te isenta de pagá-la.</p>
+        {/if}
         {/if}
 
         <h3>Valor total: R${total},00</h3>

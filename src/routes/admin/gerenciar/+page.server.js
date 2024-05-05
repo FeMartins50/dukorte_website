@@ -1,4 +1,3 @@
-import { fetchUsers } from '$lib/server/login.js';
 import { createBooking, fetchBookings } from '$lib/server/bookings.js';
 import { createSchedule } from "./schedule";
 
@@ -12,17 +11,7 @@ export const load = async () => {
         console.error(e);
     }
     
-    let sortedUsers = [];
-    try {
-        const users = await fetchUsers();
-        sortedUsers = sortUsers(users);
-    } catch (e) {
-        console.log("==Erro carregando dados de login - Admin==");
-        console.error(e);
-    }
-    
     return {
-        users: sortedUsers,
         bookings: sortedBookings
     }
 }
@@ -46,17 +35,6 @@ export const actions = {
         }
         return { status: 1 };
     }
-}
-
-function sortUsers(users) {
-    let sortedUsers = [];
-    // Admins first
-    sortedUsers = sortedUsers.concat(users.filter(user => user.role == "Admin"));
-    // CVK not admins
-    sortedUsers = sortedUsers.concat(users.filter(user => user.turma == "CVK" && user.role != "Admin"));
-    // all the others
-    sortedUsers = sortedUsers.concat(users.filter(user => user.turma != "CVK" && user.role != "Admin"));
-    return sortedUsers;
 }
 
 function sortBookings (bookings) {

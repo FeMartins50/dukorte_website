@@ -20,7 +20,11 @@
         </div>
         <div class="boxItem">
             <p>Clube:</p>
+            {#if data.clube}
+            <p style="color:green">{data.clube.qtdcortes} CORTES</p>
+            {:else}
             <p style="color:red">NÃO ASSINANTE</p>
+            {/if}
         </div>
     </div>
     <br>
@@ -93,7 +97,6 @@
         max-width: 80vw;
         padding: .5em;
 
-        color: black;
         border-radius: .8em;
         border: solid 3px black;
         background-color: rgb(230, 230, 230);
@@ -103,6 +106,9 @@
         text-decoration: underline;
         transform: scale(1.05);
         background-color: rgb(200, 200, 200);
+    }
+    .linkButton h2 {
+        color: black;
     }
     /* white and gray divs */
     .box {
