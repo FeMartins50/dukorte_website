@@ -33,10 +33,18 @@ export const actions = {
         );
 
         const clubeInfo = clube.getClubeInfo(locals.user.email);
-        let value = (clubeInfo.qtdcortes > 0 ? 0 : 13) + (tesoura ? 3 : 0) + (sobrancelha && !clubeInfo.incluidosob ? 3 : 0) + (pezinho ? 1 : 0);
+        let qtdcortes = 0, incluidosob = false;
+        if (data.clubeInfo) {
+            qtdcortes = data.clubeInfo.qtdcortes;
+            incluidosob = data.clubeInfo.incluidosob;
+        }
+        let value = (qtdcortes > 0 ? 0 : 13) + (tesoura ? 3 : 0) + (sobrancelha && !incluidosob ? 3 : 0) + (pezinho ? 1 : 0);
+        if (clubeInfo) {
+            clube.decrementCorte(locals.user.email);
+        }
+
         if (value <= 0) {
             bookings.reserveBooking (params.date);
-            clube.decrementCorte(locals.user.email);
             redirect(302, "/perfil");
         }
 

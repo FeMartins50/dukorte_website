@@ -11,7 +11,13 @@
     // day-month-year-start-end
     let tes, sob, pez;
     let total = 0;
-    $: total = (data.clubeInfo.qtdcortes > 0 ? 0 : 13) + (tes ? 3 : 0) + (sob && !data.clubeInfo.incluidosob ? 3 : 0) + (pez ? 1 : 0);
+    let qtdcortes, incluidosob;
+    if (data.clubeInfo) {
+        qtdcortes = data.clubeInfo.qtdcortes;
+        incluidosob = data.clubeInfo.incluidosob;
+    }
+    $: total = (qtdcortes ? 0 : 13) + (tes ? 3 : 0) + (sob && !incluidosob ? 3 : 0) + (pez ? 1 : 0);
+
 </script>
 
 <section>
