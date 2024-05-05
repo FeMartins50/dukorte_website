@@ -93,6 +93,7 @@
         max-width: 80vw;
         padding: .5em;
 
+        color: black;
         border-radius: .8em;
         border: solid 3px black;
         background-color: rgb(230, 230, 230);
