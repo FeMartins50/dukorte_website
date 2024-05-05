@@ -32,7 +32,7 @@ export const actions = {
         let registered = await registerUser(email, password, oauth, nome, turma);
         console.log((registered > 0 ? "deu bom" : "deu ruim"));
 
-        // VALIDATION
+/*         // VALIDATION
         const verifyUUID = crypto.randomUUID();
         const ttl = 10*60*1000;
         const timeout = new Date().getTime() + ttl;
@@ -46,8 +46,9 @@ export const actions = {
             deleteUUIDsByEmail(email);
             deletePendingEmail(email);
         } , ttl);
-        redirect(302, `/register/email=${email}`);
+        redirect(302, `/register/email=${email}`); */
 
+        redirect(302, `/login`);
         return { status: registered };
     }
 }
