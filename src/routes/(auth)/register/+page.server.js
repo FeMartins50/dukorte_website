@@ -16,7 +16,7 @@ export const actions = {
         const data = await request.formData();
         const email = data.get('email').trim();
         const password = data.get('password').trim();
-        const oauth = "Pending"; // Pending verification
+        const oauth = "DU KORTE"; // Pending verification
         const nome = data.get('nome').toUpperCase().trim();
         const turma = data.get('turma');
         // Verify if name is available
