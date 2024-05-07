@@ -1,6 +1,7 @@
 import { fetchUserDebt, updateChargeStatus } from "$lib/server/payments.js";
 import { reserveBooking } from "$lib/server/bookings.js";
 import { writeFileSync } from 'fs';
+import { fail } from '@sveltejs/kit';
 
 export const load = async ({ locals }) => {
     let debts = [];
