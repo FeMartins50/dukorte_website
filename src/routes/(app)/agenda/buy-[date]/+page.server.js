@@ -34,9 +34,9 @@ export const actions = {
 
         const clubeInfo = clube.getClubeInfo(locals.user.email);
         let qtdcortes = 0, incluidosob = false;
-        if (data.clubeInfo) {
-            qtdcortes = data.clubeInfo.qtdcortes;
-            incluidosob = data.clubeInfo.incluidosob;
+        if (clubeInfo) {
+            qtdcortes = clubeInfo.qtdcortes;
+            incluidosob = clubeInfo.incluidosob;
         }
         let value = (qtdcortes > 0 ? 0 : 13) + (tesoura ? 3 : 0) + (sobrancelha && !incluidosob ? 3 : 0) + (pezinho ? 1 : 0);
         if (clubeInfo) {
