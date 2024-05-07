@@ -68,11 +68,11 @@ export async function createSession (email) {
     sql.prepare("UPDATE users SET sessionid = ? WHERE email = ?").run(uuid, email);
     return uuid;
 }
-export async function fetchUserBySession (sessionid) {
+export async function getUserBySession (sessionid) {
     const user = sql.prepare("SELECT email, nome, turma, role FROM users WHERE sessionid = ?").get(sessionid);
     return user;
 }
-export async function fetchUsers () {
+export async function getUsers () {
     const user = sql.prepare("SELECT nome, turma, role, email FROM users").all();
     return user;
 }

@@ -31,7 +31,7 @@ export function deleteCharge (pixId) {
         return -1;
     }
 }
-export function fetchUserDebt (email, status = 0) {
+export function getUserDebt (email, status = 0) {
     // if user has debt, return the debt
     // if user has no debt, return []
     try {
@@ -43,7 +43,7 @@ export function fetchUserDebt (email, status = 0) {
         return -1;
     }
 }
-export function fetchCharge (pixId) {
+export function getCharge (pixId) {
     try {
         let debt = sql.prepare("SELECT * FROM payments WHERE pixId = ?;").get(pixId);
         return debt;

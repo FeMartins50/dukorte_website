@@ -1,4 +1,4 @@
-import { fetchBookingsByDay } from "$lib/server/bookings.js";
+import { getBookingsByDay } from "$lib/server/bookings.js";
 const statusEnum = ["Disponível", "Pendente", "Reservado"];
 
 export const load = async ({ locals }) => {
@@ -8,7 +8,7 @@ export const load = async ({ locals }) => {
     let dailyBookings = [];
     for (let i = 0; i < 7; i++) {
         dayStr = date.toISOString();
-        dailyBookings = fetchBookingsByDay(dayStr.substring(0, 10));
+        dailyBookings = getBookingsByDay(dayStr.substring(0, 10));
         //2024-03-15+10:20+10:40
         dailyBookings = dailyBookings.map(booking => {
             return {

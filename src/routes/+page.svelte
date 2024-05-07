@@ -1,9 +1,9 @@
 <script>
     import { page } from "$app/stores";
+    import Booking from '$lib/classes/Booking';
     export let data;
-
-    import * as util from "$lib/util.js";
-
+    const pendingKortes = data.pendingKortes.map?.(booking => new Booking(booking));
+    const futureKortes = data.futureKortes.map?.(booking => new Booking(booking));
     const cortes_precos = [
         ["Na máquina", "R$13.00"],
         ["Na tesoura", "+R$3.00"],
@@ -24,16 +24,16 @@
             <p>Acessar Perfil</p>
         </a>
 
-        <p>Você tem {data.pendingKortes} pagamentos pendentes.</p>
-        {#if data.pendingKortes}
+        <p>Você tem {pendingKortes} pagamentos pendentes.</p>
+        {#if pendingKortes}
         <a class="linkButton" href="/agenda/pagamento">Verificar Pagamentos</a>
         {/if}
 
         <div class="table">
             <div class="caption">
-                Cortes Marcados - Total: {data.futureKortes.length}
+                Cortes Marcados - Total: {futureKortes.length}
             </div>
-            {#if data.futureKortes.length}
+            {#if futureKortes.length}
             <div class="thead">
                 <div class="row">
                     <p style="width: 40%;">Data</p>
@@ -41,10 +41,10 @@
                 </div>
             </div>
             <div class="tbody">
-                {#each data.futureKortes as booking}
+                {#each futureKortes as booking}
                 <div class="row">
-                    <p style="width: 40%;">{util.parseDate(booking.date)}</p>
-                    <p class="espec" style="width: 60%;">{@html util.parseEspec(booking.corteJSON)}</p>
+                    <p style="width: 40%;">{booking.getDateString()}</p>
+                    <p class="espec" style="width: 60%;">{@html booking.getCorteHTML()}</p>
                 </div>
                 {/each}
             </div>

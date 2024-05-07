@@ -1,8 +1,10 @@
 <script>
     import { page } from '$app/stores';
+    import Booking from '$lib/classes/Booking';
     export let data;
-
-    import * as util from "$lib/util.js";
+    const futureKortes = data.futureKortes.map?.(booking => new Booking(booking));
+    const pastKortes = data.pastKortes.map?.(booking => new Booking(booking));
+    const clube = data.clube;
 </script>
 
 <section>
@@ -20,8 +22,8 @@
         </div>
         <div class="boxItem">
             <p>Clube:</p>
-            {#if data.clube}
-            <p style="color:green">{data.clube.qtdcortes} CORTES</p>
+            {#if clube}
+            <p style="color:green">{clube.qtdcortes} CORTES</p>
             {:else}
             <p style="color:red">NÃO ASSINANTE</p>
             {/if}
@@ -32,9 +34,9 @@
     <br>
     <div class="table">
         <div class="caption">
-            Cortes Marcados - Total: {data.futureKortes.length}
+            Cortes Marcados - Total: {futureKortes.length}
         </div>
-        {#if data.futureKortes.length}
+        {#if futureKortes.length}
         <div class="thead">
             <div class="row">
                 <p style="width: 40%;">Data</p>
@@ -42,10 +44,10 @@
             </div>
         </div>
         <div class="tbody">
-            {#each data.futureKortes as booking}
+            {#each futureKortes as booking}
             <div class="row">
-                <p style="width: 40%;">{util.parseDate(booking.date)}</p>
-                <p class="espec" style="width: 60%;">{@html util.parseEspec(booking.corteJSON)}</p>
+                <p style="width: 40%;">{booking.getDateString()}</p>
+                <p class="espec" style="width: 60%;">{@html booking.getCorteHTML()}</p>
             </div>
             {/each}
         </div>
@@ -55,9 +57,9 @@
 
     <div class="table">
         <div class="caption">
-            Cortes Passados - Total: {data.pastKortes.length}
+            Cortes Passados - Total: {pastKortes.length}
         </div>
-        {#if data.pastKortes.length}
+        {#if pastKortes.length}
         <div class="thead">
             <div class="row">
                 <p style="width: 40%;">Data</p>
@@ -65,10 +67,10 @@
             </div>
         </div>
         <div class="tbody">
-            {#each data.pastKortes as booking}
+            {#each pastKortes as booking}
             <div class="row">
-                <p style="width: 40%;">{util.parseDate(booking.date)}</p>
-                <p class="espec" style="width: 60%;">{@html util.parseEspec(booking.corteJSON)}</p>
+                <p style="width: 40%;">{booking.getDateString()}</p>
+                <p class="espec" style="width: 60%;">{@html booking.getCorteHTML()}</p>
             </div>
             {/each}
         </div>

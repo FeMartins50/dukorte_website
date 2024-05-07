@@ -1,10 +1,10 @@
-import { createBooking, fetchBookings } from '$lib/server/bookings.js';
+import { createBooking, getBookings } from '$lib/server/bookings.js';
 import { createSchedule } from "./schedule";
 
 export const load = async () => {
     let sortedBookings = [];
     try {
-        const bookings = await fetchBookings();
+        const bookings = await getBookings();
         sortedBookings = sortBookings(bookings);
     } catch (e) {
         console.log("==Erro carregando dados de bookings - Admin==");

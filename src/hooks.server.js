@@ -1,4 +1,4 @@
-import { fetchUserBySession } from "$lib/server/login.js";
+import { getUserBySession } from "$lib/server/login.js";
 
 export async function handle({ event, resolve }) {
     const sessionid = event.cookies.get('sessionid');
@@ -7,7 +7,7 @@ export async function handle({ event, resolve }) {
         return resolve(event);
     }
 
-    const user = await fetchUserBySession(sessionid);
+    const user = await getUserBySession(sessionid);
     if (user) {
         event.locals.user = {
             name: user.nome,

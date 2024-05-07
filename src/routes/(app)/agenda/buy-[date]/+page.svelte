@@ -14,7 +14,7 @@
     let qtdcortes, incluidosob;
     if (data.clubeInfo) {
         qtdcortes = data.clubeInfo.qtdcortes;
-        incluidosob = data.clubeInfo.incluidosob;
+        incluidosob = data.clubeInfo.incluidosob && Boolean(qtdcortes);
     }
     $: total = (qtdcortes ? 0 : 13) + (tes ? 3 : 0) + (sob && !incluidosob ? 3 : 0) + (pez ? 1 : 0);
 
