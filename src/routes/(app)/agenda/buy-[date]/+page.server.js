@@ -7,7 +7,7 @@ export function load ({ params, locals }) {
     if (!locals.user) {
         redirect(302, "/");
     }
-    if (bookings.getStatus(params.date)) {
+    if (bookings.fetchStatus(params.date)) {
         redirect(302, "/");
     }
     const clubeInfo = clube.getClubeInfo(locals.user.email);
@@ -36,7 +36,7 @@ export const actions = {
         let qtdcortes = 0, incluidosob = false;
         if (clubeInfo) {
             qtdcortes = clubeInfo.qtdcortes;
-            incluidosob = clubeInfo.incluidosob && Boolean(qtdcortes);
+            incluidosob = clubeInfo.incluidosob;
         }
         let value = (qtdcortes > 0 ? 0 : 13) + (tesoura ? 3 : 0) + (sobrancelha && !incluidosob ? 3 : 0) + (pezinho ? 1 : 0);
         if (clubeInfo) {
@@ -61,11 +61,11 @@ export const actions = {
         );
         setTimeout(() => {
             // Se já está reservado, é porque pagamento já foi processado em outro lugar.
-            if (bookings.getStatus(params.date) == 2) {
+            if (bookings.fetchStatus(params.date) == 2) {
                 return payments.deleteCharge(pixId);;
             }
             // Senão, vamos ver se ele pagou mesmo. Pode ter dado algum erro, sei lá.
-            const charge = payments.getCharge(pixId);
+            const charge = payments.fetchCharge(pixId);
             if (charge.status == "1") {
                 bookings.reserveBooking(charge.date);
             } else {

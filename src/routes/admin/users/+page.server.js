@@ -1,10 +1,10 @@
-import { getUsers } from '$lib/server/login.js';
+import { fetchUsers } from '$lib/server/login.js';
 import { getClubeUsers, resetCortes } from '$lib/server/clube.js';
 
 export const load = async () => {
     let sortedUsers = [];
     try {
-        const users = await getUsers();
+        const users = await fetchUsers();
         sortedUsers = sortUsers(users);
     } catch (e) {
         console.log("==Erro carregando dados de login - Admin==");

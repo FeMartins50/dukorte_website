@@ -1,8 +1,6 @@
 <script>
     import { createSchedule } from "./schedule";
-    import Booking from '$lib/classes/Booking';
     export let data;
-    const bookings = data.bookings.map?.(booking => new Booking(booking));
     let bookingPreview = {
         day: "",
         time: "00:00",
@@ -12,6 +10,8 @@
     };
     let processedPreview = [];
     $: processedPreview = createSchedule(bookingPreview.time, Number(bookingPreview.duration), Number(bookingPreview.pause), Number(bookingPreview.quantity))
+    
+    import * as util from "$lib/util.js";
 </script>
 
 <section>
@@ -21,9 +21,9 @@
         <div class="overflowContainer">
             <div class="table" id="bookingsTable">
                 <div class="caption">
-                    Total de cortes registrados: {bookings.length}
+                    Total de cortes registrados: {data.bookings.length}
                 </div>
-                {#if bookings.length}
+                {#if data.bookings.length}
                 <div class="thead">
                     <div class="row">
                         <p style="width: 30%;">Data</p>
@@ -33,12 +33,12 @@
                     </div>
                 </div>
                 <div class="tbody">
-                    {#each bookings as row}
+                    {#each data.bookings as row}
                     <div class="row">
-                        <p style="width: 30%;">{row.getDateString()}</p>
+                        <p style="width: 30%;">{util.parseDate(row.date)}</p>
                         <p style="width: 10%;">{row.status}</p>
                         <p style="width: 30%;">{row.customer.split("-")[0] ? row.customer.split("-")[0] : "-"}</p>
-                        <p class="espec" style="width: 30%;">{@html row.getCorteHTML()}</p>
+                        <p class="espec" style="width: 30%;">{@html util.parseEspec(row.corteJSON)}</p>
                     </div>
                     {/each}
                 </div>

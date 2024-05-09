@@ -1,4 +1,4 @@
-import { getBookingsByDay } from "$lib/server/bookings.js";
+import { fetchBookingsByDay } from "$lib/server/bookings.js";
 
 export const load = async () => {
     let date = new Date(new Date().getTime() - 3*60*60*1000);
@@ -7,7 +7,7 @@ export const load = async () => {
     let dailyBookings = [];
     for (let i = 0; i < 7; i++) {
         dayStr = date.toISOString();
-        dailyBookings = getBookingsByDay(dayStr.substring(0, 10));
+        dailyBookings = fetchBookingsByDay(dayStr.substring(0, 10));
         //2024-03-15+10:20+10:40
         dailyBookings = sortBookings(dailyBookings);
         week[i] = {

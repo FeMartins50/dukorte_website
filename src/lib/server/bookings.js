@@ -47,22 +47,17 @@ export function reserveBooking (date) {
     }
     return 0;
 }
-export function getBookingsByDay (day) {
+export function fetchBookingsByDay (day) {
     let bookings = [];
     bookings = sql.prepare("SELECT * FROM bookings WHERE date LIKE ?;").all(day+'%');
     return bookings;
 }
-export function getBookings () {
+export function fetchBookings () {
     let bookings = [];
     bookings = sql.prepare("SELECT * FROM bookings;").all();
     return bookings;
 }
-export function getBookingsByCustomer (customer) {
-    let bookings = [];
-    bookings = sql.prepare("SELECT * FROM bookings WHERE customer = ?;").all(customer);
-    return bookings;
-}
-export function getStatus (date) {
+export function fetchStatus (date) {
     try {
         const status = sql.prepare("SELECT status FROM bookings WHERE date = ?;").get(date)['status'];
         return status;
@@ -71,4 +66,8 @@ export function getStatus (date) {
         console.error(e);
         return -1;
     }
+}
+export function fetchBookingsByCustomer (customer) {
+    const bookings = sql.prepare("SELECT * FROM bookings WHERE customer = ?;").all(customer);
+    return bookings;
 }

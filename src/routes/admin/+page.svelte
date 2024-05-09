@@ -1,19 +1,13 @@
 <script>
     export let data;
-    import Booking from '$lib/classes/Booking';
-    const week = data.week.map(day => {
-        return {
-            date: day.date,
-            kortes: day.kortes.map?.(booking => new Booking(booking))
-        }
-    });
+    import * as util from "$lib/util.js";
 </script>
 
 <section>
     <a class="linkButton" href="/admin/gerenciar"><h2>GERENCIAR CORTES</h2></a>
 
     <h1>Kortes da Semana</h1>
-    {#each week as day}
+    {#each data.week as day}
     <div class="table" id="loginTable">
         <div class="caption">
             {day.date} - Total de cortes: {day.kortes.length}
@@ -30,10 +24,10 @@
         <div class="tbody">
             {#each day.kortes as booking}
             <div class="row">
-                <p style="width: 30%">{booking.getDateString()}</p>
+                <p style="width: 30%">{util.parseDate(booking.date)}</p>
                 <p style="width: 30%;">{booking.customer.split("-")[0] ? booking.customer.split("-")[0] : "-"}</p>
-                <p style="width: 15%;">{booking.getQuarto()}</p>
-                <p class="espec" style="width: 25%;">{@html booking.getCorteHTML()}</p>
+                <p style="width: 15%;">{util.parseQuarto(booking.corteJSON)}</p>
+                <p class="espec" style="width: 25%;">{@html util.parseEspec(booking.corteJSON)}</p>
             </div>
             {/each}
         </div>
