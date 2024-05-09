@@ -24,8 +24,8 @@
             <p>Acessar Perfil</p>
         </a>
 
-        <p>Você tem {data.pendingKortes} pagamentos pendentes.</p>
-        {#if data.pendingKortes}
+        <p>Você tem {data.pendingKortesQtd} pagamentos pendentes.</p>
+        {#if data.pendingKortesQtd}
         <a class="linkButton" href="/agenda/pagamento">Verificar Pagamentos</a>
         {/if}
 

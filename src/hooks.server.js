@@ -25,6 +25,7 @@ export async function handleError({ error, event, status }) {
     console.log("==Erro inesperado==");
 
 	return {
-		message: 'Whoops! Deu erro.',
+		message: error.message,
+        status: status
 	};
 }

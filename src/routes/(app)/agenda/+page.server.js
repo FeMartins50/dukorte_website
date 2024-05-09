@@ -3,13 +3,12 @@ const statusEnum = ["Disponível", "Pendente", "Reservado"];
 
 export const load = async ({ locals }) => {
     let date = new Date(new Date().getTime() - 3*60*60*1000);
-    let dayStr = "";
-    let week = [];
-    let dailyBookings = [];
+    let dayStr = "", week = [], dailyBookings = [];
+    
     for (let i = 0; i < 7; i++) {
-        dayStr = date.toISOString();
-        dailyBookings = getBookingsByDay(dayStr.substring(0, 10));
-        //2024-03-15+10:20+10:40
+        dayStr = date.toISOString().substring(0, 10);
+        dailyBookings = getBookingsByDay(dayStr);
+        // Date example (y-m-d+ts+te): 2024-03-15+10:20+10:40
         dailyBookings = dailyBookings.map(booking => {
             return {
                 date: booking.date,
@@ -17,10 +16,10 @@ export const load = async ({ locals }) => {
             }
         })
         dailyBookings = sortBookings(dailyBookings);
-        week[i] = {
+        week.push({
             date: dayStr.substring(8, 10) + "/" + dayStr.substring(5, 7),
             kortes: dailyBookings
-        }
+        });
         date = new Date(date.getTime() + 24*60*60*1000);
     }
 
