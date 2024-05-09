@@ -11,7 +11,7 @@
     let processedPreview = [];
     $: processedPreview = createSchedule(bookingPreview.time, Number(bookingPreview.duration), Number(bookingPreview.pause), Number(bookingPreview.quantity))
     
-    import * as util from "$lib/util.js";
+    import util from "$lib/util.js";
 </script>
 
 <section>

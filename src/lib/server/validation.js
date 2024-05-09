@@ -1,6 +1,7 @@
 import SQLite from 'better-sqlite3';
 const sql = new SQLite("./db.sqlite");
 
+// Create into the database
 export function registerUUID (uuid, email, timeout) {
     try {
         sql.prepare("INSERT INTO validation (uuid, email, timeout) VALUES (?, ?, ?);").run(uuid, email, timeout);
@@ -11,6 +12,7 @@ export function registerUUID (uuid, email, timeout) {
         return -1;
     }
 }
+// Get uuids by email
 export function getUUIDsByEmail (email) {
     try {
         const uuids = sql.prepare("SELECT * FROM validation WHERE email = ?;").all(email);
@@ -21,6 +23,7 @@ export function getUUIDsByEmail (email) {
         return -1;
     }
 }
+// Get email by any uuid
 export function getEmailByUUID (uuid) {
     try {
         const email = sql.prepare("SELECT * FROM validation WHERE uuid = ?;").get(uuid);
@@ -31,6 +34,7 @@ export function getEmailByUUID (uuid) {
         return -1;
     }
 }
+// Delete ALL uuids by specified email
 export function deleteUUIDsByEmail (email) {
     try {
         sql.prepare("DELETE FROM validation WHERE email = ?;").run(email);

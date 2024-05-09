@@ -1,8 +1,8 @@
-import { fetchBookingsByCustomer } from "$lib/server/bookings.js"
+import { getBookingsByCustomer } from "$lib/server/bookings.js"
 import { getClubeInfo } from "$lib/server/clube.js";
 
 export const load = ({ locals }) => {
-    const bookings = fetchBookingsByCustomer(locals.user.name+"-"+locals.user.squad);
+    const bookings = getBookingsByCustomer(locals.user.name+"-"+locals.user.squad);
     let date = new Date(new Date().getTime() - 3*60*60*1000);
     let dayStr = date.toISOString();
     let futureKortes = [];

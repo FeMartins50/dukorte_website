@@ -1,6 +1,7 @@
 import SQLite from 'better-sqlite3';
 const sql = new SQLite("./db.sqlite");
 
+// Create in database
 export function registerCharge (email, value, date, timeout, pixId) {
     try {
         sql.prepare("INSERT INTO payments (email, value, date, pixId, status, timeout) VALUES (?, ?, ?, ?, ?, ?);").run(email, value, date, pixId, 0, timeout);
@@ -11,6 +12,7 @@ export function registerCharge (email, value, date, timeout, pixId) {
         return -1;
     }
 }
+// Update status by id... is someone even reading this?
 export function updateChargeStatus (pixId) {
     try {
         sql.prepare("UPDATE payments SET status = 1 WHERE pixId = ?;").run(pixId);
@@ -21,6 +23,7 @@ export function updateChargeStatus (pixId) {
         return -1;
     }
 }
+// Delete my neurons from my brain;
 export function deleteCharge (pixId) {
     try {
         sql.prepare("DELETE FROM payments WHERE pixId = ?;").run(pixId);
@@ -31,7 +34,8 @@ export function deleteCharge (pixId) {
         return -1;
     }
 }
-export function fetchUserDebt (email, status = 0) {
+// Get ALL user debt by email; if omitted second param, only gets IF 'status' == 0;
+export function getUserDebt (email, status = 0) {
     // if user has debt, return the debt
     // if user has no debt, return []
     try {
@@ -43,7 +47,8 @@ export function fetchUserDebt (email, status = 0) {
         return -1;
     }
 }
-export function fetchCharge (pixId) {
+// Get charge by id
+export function getCharge (pixId) {
     try {
         let debt = sql.prepare("SELECT * FROM payments WHERE pixId = ?;").get(pixId);
         return debt;
