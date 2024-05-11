@@ -18,7 +18,7 @@ export function decrementCorte (email) {
     try {
         const info = sql.prepare("SELECT * FROM clube WHERE email = ?;").get(email);
         if (info.qtdcortes <= 0) return 0;
-        sql.prepare("UPDATE clube SET qtdcortes = ?;").run(info.qtdcortes - 1);
+        sql.prepare("UPDATE clube SET qtdcortes = ? WHERE email = ?;").run(info.qtdcortes - 1, email);
     } catch (e) {
         console.log("== ERROR WHILE UPDATING CLUBE == " + email);
         console.error(e);
