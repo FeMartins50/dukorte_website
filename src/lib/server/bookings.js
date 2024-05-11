@@ -1,10 +1,7 @@
 import SQLite from 'better-sqlite3';
 const sql = new SQLite("./db.sqlite");
 
-/* ATENÇÃO
-    Vai ser outro canto que vai lidar com o pagamento.
-    Aqui só vai definir o corte como pendente ou disponível pra mostrar no app.
-*/
+// Inserts booking into database
 export function createBooking (date) {
     try {
         sql.prepare("INSERT INTO bookings (date, status, customer, corteJSON) VALUES (?, ?, ?, ?);").run(date, 0, "-", "{}");
@@ -15,6 +12,7 @@ export function createBooking (date) {
         return -1;
     }
 }
+// Deletes booking ONLY IF status == 0;
 export function deleteBooking (date) {
     const isDeletable = sql.prepare("SELECT count(*) FROM bookings WHERE date = ? AND status = 0;").get(date)['count(*)'];
     if (isDeletable) {
@@ -23,6 +21,7 @@ export function deleteBooking (date) {
     }
     return 0;
 }
+// Updates booking as "Pending" (status = 1) IF status == 0;
 export function prepareBooking (date, customer, corteJSON) {
     const isAvailable = sql.prepare("SELECT count(*) FROM bookings WHERE date = ? AND status = 0;").get(date)['count(*)'];
     if (isAvailable) {
@@ -31,6 +30,7 @@ export function prepareBooking (date, customer, corteJSON) {
     }
     return 0;
 }
+// Updates booking as "Disponível" (status == 0) IF status == 1;
 export function clearBooking (date) {
     const isPending = sql.prepare("SELECT count(*) FROM bookings WHERE date = ? AND status = 1;").get(date)['count(*)'];
     if (isPending) {
@@ -39,6 +39,7 @@ export function clearBooking (date) {
     }
     return 0;
 }
+// Updates booking as "Reservado" (status == 2) IF status == 1;
 export function reserveBooking (date) {
     const isPending = sql.prepare("SELECT count(*) FROM bookings WHERE date = ? AND status = 1;").get(date)['count(*)'];
     if (isPending) {
@@ -47,17 +48,20 @@ export function reserveBooking (date) {
     }
     return 0;
 }
-export function fetchBookingsByDay (day) {
+// Get all bookings where 'date' starts with the specified day;
+export function getBookingsByDay (day) {
     let bookings = [];
     bookings = sql.prepare("SELECT * FROM bookings WHERE date LIKE ?;").all(day+'%');
     return bookings;
 }
-export function fetchBookings () {
+// Get ALL bookings;
+export function getBookings () {
     let bookings = [];
     bookings = sql.prepare("SELECT * FROM bookings;").all();
     return bookings;
 }
-export function fetchStatus (date) {
+// Get status of that booking, by date;
+export function getStatus (date) {
     try {
         const status = sql.prepare("SELECT status FROM bookings WHERE date = ?;").get(date)['status'];
         return status;
@@ -67,7 +71,8 @@ export function fetchStatus (date) {
         return -1;
     }
 }
-export function fetchBookingsByCustomer (customer) {
+// Get all bookings by customer
+export function getBookingsByCustomer (customer) {
     const bookings = sql.prepare("SELECT * FROM bookings WHERE customer = ?;").all(customer);
     return bookings;
 }

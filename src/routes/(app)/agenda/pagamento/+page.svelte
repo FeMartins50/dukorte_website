@@ -2,7 +2,7 @@
     export let data;
     export let form;
     import { onMount } from 'svelte';
-    import * as util from "$lib/util.js";
+    import util from "$lib/util.js";
 
     let chavePix = "19629475723";
     let files;

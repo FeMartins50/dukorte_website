@@ -3,6 +3,7 @@
 </script>
 
 <h1>Erro no servidor!</h1>
+<p>Status Code: {$page.error.status}</p>
 <p>{$page.error.message}</p>
 
 <style>

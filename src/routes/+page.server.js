@@ -1,17 +1,19 @@
-import { fetchBookingsByCustomer } from "$lib/server/bookings.js"
+import { getBookingsByCustomer } from "$lib/server/bookings.js"
 
 export const load = ({ locals }) => {
+    // If user not logged in, return;
     if (!locals.user) return;
-    const bookings = fetchBookingsByCustomer(locals.user.name+"-"+locals.user.squad);
+
+    const bookings = getBookingsByCustomer(locals.user.name+"-"+locals.user.squad);
     let date = new Date(new Date().getTime() - 3*60*60*1000);
     let dayStr = date.toISOString();
 
     let futureKortes = [];
-    let pendingKortes = 0;
+    let pendingKortesQtd = 0;
     bookings.forEach(booking => {
         if (booking.date.substring(0, 10) >= dayStr) {
             if (booking.status == 1) {
-                pendingKortes++;
+                pendingKortesQtd++;
             } else if (booking.status == 2) {
                 futureKortes.push(booking);
             }
@@ -20,6 +22,6 @@ export const load = ({ locals }) => {
 
     return {
         futureKortes: futureKortes,
-        pendingKortes: pendingKortes
+        pendingKortesQtd: pendingKortesQtd
     }
 }

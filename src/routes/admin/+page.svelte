@@ -1,6 +1,6 @@
 <script>
     export let data;
-    import * as util from "$lib/util.js";
+    import util from "$lib/util.js";
 </script>
 
 <section>

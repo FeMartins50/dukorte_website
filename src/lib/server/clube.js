@@ -1,6 +1,7 @@
 import SQLite from 'better-sqlite3';
 const sql = new SQLite("./db.sqlite");
 
+// TEMPORARY | Deletes from database and inserts it back with specified properties;
 export function resetCortes (email, qtdcortes, incluidosob) {
     try {
         sql.prepare("DELETE FROM clube WHERE email = ?;").run(email);
@@ -12,7 +13,7 @@ export function resetCortes (email, qtdcortes, incluidosob) {
         return -1;
     }
 }
-
+// Decrement qtdcortes; return 0 IF 'qtdcortes' <= 0
 export function decrementCorte (email) {
     try {
         const info = sql.prepare("SELECT * FROM clube WHERE email = ?;").get(email);
@@ -24,7 +25,7 @@ export function decrementCorte (email) {
         return -1;
     }
 }
-
+// Get properties by email;
 export function getClubeInfo (email) {
     try {
         const info = sql.prepare("SELECT * FROM clube WHERE email = ?;").get(email);
@@ -35,6 +36,7 @@ export function getClubeInfo (email) {
         return -1;
     }
 }
+// Get ALL clube users
 export function getClubeUsers () {
     const user = sql.prepare("SELECT * FROM clube;").all();
     return user;

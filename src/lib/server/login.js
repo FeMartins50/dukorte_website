@@ -6,8 +6,8 @@ const sql = new SQLite("./db.sqlite");
 // Build gone wrong, moved to $lib/main.js
 import { stringToHash } from "$lib/main.js";
 
-// Register in users (email, password, oauth)
-export async function registerUser (email, password, oauth, nome, turma) {
+// Register in database
+export function registerUser (email, password, oauth, nome, turma) {
     try {
         let hash = stringToHash(password);
         sql.prepare("INSERT INTO users (email, hash, oauth, nome, turma, role) VALUES (?, ?, ?, ?, ?, ?);").run(email, hash, oauth, nome, turma, "User");
@@ -18,6 +18,7 @@ export async function registerUser (email, password, oauth, nome, turma) {
         return -1;
     }
 }
+// Updates 'oauth' to save validation.
 export function validateEmail (email, oauth = "DU KORTE") {
     try {
         sql.prepare("UPDATE users SET oauth = ? WHERE email = ?;").run(oauth, email);
@@ -28,6 +29,7 @@ export function validateEmail (email, oauth = "DU KORTE") {
         return -1;
     }
 }
+// Delete from database IF 'oauth' == "Pending";
 export function deletePendingEmail (email) {
     try {
         let isDeletable = sql.prepare("SELECT * FROM users WHERE email = ? AND oauth = ?;").run(email, "Pending"); 
@@ -41,15 +43,18 @@ export function deletePendingEmail (email) {
         return -1;
     }
 }
-export async function isNameAndSquadAvailable (nome, turma) {
+// Really need to comment?
+export function isNameAndSquadAvailable (nome, turma) {
     let nameExists = sql.prepare("SELECT count(*) FROM users WHERE nome = ? AND turma = ?;").get(nome, turma);
     return nameExists['count(*)'] ? -1 : 1;
 }
-export async function isEmailAvailable (email) {
+// Please...
+export function isEmailAvailable (email) {
     let emailExists = sql.prepare("SELECT count(*) FROM users WHERE email = ?;").get(email);
     return emailExists['count(*)'] ? -1 : 1;
 }
-export async function loginUser (email, password) {
+// Login user...
+export function loginUser (email, password) {
     try {
         let hash = stringToHash(password);
         const user = sql.prepare("SELECT * FROM users WHERE email = ? AND hash = ?;").get(email, hash);
@@ -63,16 +68,19 @@ export async function loginUser (email, password) {
         return { success: false };
     }
 }
-export async function createSession (email) {
+// Create sesssionid (uuid) and store it in database; return it for cookies;
+export function createSession (email) {
     const uuid = crypto.randomUUID().toString();
     sql.prepare("UPDATE users SET sessionid = ? WHERE email = ?").run(uuid, email);
     return uuid;
 }
-export async function fetchUserBySession (sessionid) {
+// Get user by sessionid;
+export function getUserBySession (sessionid) {
     const user = sql.prepare("SELECT email, nome, turma, role FROM users WHERE sessionid = ?").get(sessionid);
     return user;
 }
-export async function fetchUsers () {
+// Get ALL users;
+export function getUsers () {
     const user = sql.prepare("SELECT nome, turma, role, email FROM users").all();
     return user;
 }
