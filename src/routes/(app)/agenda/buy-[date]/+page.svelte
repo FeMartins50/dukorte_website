@@ -16,7 +16,7 @@
         qtdcortes = data.clubeInfo.qtdcortes;
         incluidosob = data.clubeInfo.incluidosob;
     }
-    $: total = (qtdcortes ? 0 : 13) + (tes ? 3 : 0) + (sob && !incluidosob ? 3 : 0) + (pez ? 1 : 0);
+    $: total = (qtdcortes ? 0 : 13) + (tes ? 3 : 0) + (sob && !incluidosob ? 3 : 0) + (pez && !(qtdcortes > 0) ? 1 : 0);
 
 </script>
 

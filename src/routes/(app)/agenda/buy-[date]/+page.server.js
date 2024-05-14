@@ -38,7 +38,7 @@ export const actions = {
             qtdcortes = clubeInfo.qtdcortes;
             incluidosob = clubeInfo.incluidosob;
         }
-        let value = (qtdcortes > 0 ? 0 : 13) + (tesoura ? 3 : 0) + (sobrancelha && !incluidosob ? 3 : 0) + (pezinho ? 1 : 0);
+        let value = (qtdcortes > 0 ? 0 : 13) + (tesoura ? 3 : 0) + (sobrancelha && !incluidosob ? 3 : 0) + (pezinho && !(qtdcortes > 0) ? 1 : 0);
         if (clubeInfo) {
             clube.decrementCorte(locals.user.email);
         }
