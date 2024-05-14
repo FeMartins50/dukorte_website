@@ -4,7 +4,7 @@
     import { onMount } from 'svelte';
     import util from "$lib/util.js";
 
-    let chavePix = "19629475723";
+    let chavePix = "(21)990634638";
     let files;
 
     let time = new Date().getTime();
@@ -24,7 +24,7 @@
 <section>
     <h2>Lista de Pagamentos Pendentes</h2>
     <br>
-    <p><strong>Chave PIX (CPF):</strong> {chavePix}</p>
+    <p><strong>Chave PIX (celular):</strong> {chavePix}</p>
     <br>
     {#if form?.message}<p class="error">{form.message}</p>{/if}
     {#if files}
