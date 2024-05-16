@@ -40,7 +40,7 @@
             <span class="checkmark"></span>
         </label>
           
-        <label class="container">Pézinho? (+R$1,00)
+        <label class="container">Pezinho? (+R$1,00)
             <input bind:checked={pez} name="pezinho" type="checkbox">
             <span class="checkmark"></span>
         </label>
@@ -54,6 +54,9 @@
         <p style="color: red">O clube pode cobrir mais {data.clubeInfo.qtdcortes} corte(s).</p>
         {#if data.clubeInfo.incluidosob}
         <p style="color: red; text-align: center">Se deseja sobrancelha, marque a opção "Sobrancelha?". Sua inscrição no clube te isenta de pagá-la.</p>
+        {/if}
+        {#if data.clubeInfo.qtdcortes > 0}
+        <p style="color: red; text-align: center">Se deseja pezinho, marque a opção "Pezinho?". Sua inscrição no clube te isenta de pagá-la.</p>
         {/if}
         {/if}
 

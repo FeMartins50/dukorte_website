@@ -28,10 +28,12 @@
     <br>
     {#if form?.message}<p class="error">{form.message}</p>{/if}
     {#if files}
-    <p><strong>Arquivo selecionado:</strong></p>
-    {#each Array.from(files) as file}
-        <p>{file.name}</p>
-    {/each}
+    <div class="fileAlert">
+        <p><strong>Arquivo selecionado:</strong></p>
+        {#each Array.from(files) as file}
+            <p>{file.name}</p>
+        {/each}
+    </div>
     {/if}
     {#each data.debts as debt}
     <div class="debtInfo">
@@ -50,9 +52,9 @@
             <input type="hidden" value={debt.pixId} name="pixId">
             <!-- Pra poder acessar de qual forms que é o envio.-->
         
-            <label class="custom-file-upload" accept="pdf">
+            <label class="custom-file-upload" accept="image/*, .pdf">
                 <input bind:files type="file" name="voucher" required/>
-                Enviar Comprovante (.pdf)
+                Enviar Comprovante (PDF ou imagem)
             </label>
             <button class="submitButton" type="submit">Enviar</button>
         </form>
@@ -85,6 +87,11 @@
     }
     .error {
         color: red;
+    }
+    .fileAlert {
+        padding: 10px;
+        border: 6px red solid;
+        border-radius: 5px;
     }
 
     input[type="file"] {
