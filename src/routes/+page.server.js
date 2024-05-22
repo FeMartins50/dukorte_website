@@ -11,7 +11,7 @@ export const load = ({ locals }) => {
     let futureKortes = [];
     let pendingKortesQtd = 0;
     bookings.forEach(booking => {
-        if (booking.date.substring(0, 10) >= dayStr) {
+        if (booking.date.substring(0, 10) >= dayStr.substring(0, 10)) {
             if (booking.status == 1) {
                 pendingKortesQtd++;
             } else if (booking.status == 2) {

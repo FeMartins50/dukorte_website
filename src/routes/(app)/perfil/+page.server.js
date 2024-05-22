@@ -11,7 +11,7 @@ export const load = ({ locals }) => {
         if (booking.status != 2) {
             return;
         }
-        if (booking.date.substring(0, 10) >= dayStr) {
+        if (booking.date.substring(0, 10) >= dayStr.substring(0, 10)) {
             futureKortes.push(booking);
         } else {
             pastKortes.push(booking);
