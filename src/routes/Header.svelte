@@ -80,7 +80,7 @@
         align-items: center;
     }
     #mainLogo {
-        margin: 0.6em 0.2em;
+        margin: 0.2em 0.2em;
         
         font-size: 2em;
         font-family: "Protest Strike" !important;
