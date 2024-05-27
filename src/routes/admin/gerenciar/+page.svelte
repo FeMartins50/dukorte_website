@@ -17,29 +17,24 @@
 <section>
     <h1>Painel do <strong style="color: red">ADMIN</strong></h1>
     <h2>Horários</h2>
-    <div class="wrapper">
-        <div class="overflowContainer">
+    <div class="container">
+        <div class="overflowWrapper">
             <div class="table" id="bookingsTable">
                 <div class="caption">
                     Total de cortes registrados: {data.bookings.length}
                 </div>
                 {#if data.bookings.length}
-                <div class="thead">
-                    <div class="row">
-                        <p style="width: 30%;">Data</p>
-                        <p style="width: 10%;">Status</p>
-                        <p style="width: 30%;">Cliente</p>
-                        <p style="width: 30%;">TES - SOB - PÉ</p>
-                    </div>
-                </div>
-                <div class="tbody">
-                    {#each data.bookings as row}
-                    <div class="row">
-                        <p style="width: 30%;">{util.parseDate(row.date)}</p>
-                        <p style="width: 10%;">{row.status}</p>
-                        <p style="width: 30%;">{row.customer.split("-")[0] ? row.customer.split("-")[0] : "-"}</p>
-                        <p class="espec" style="width: 30%;">{@html util.parseEspec(row.corteJSON)}</p>
-                    </div>
+                <div class="tableContent">
+                    <p class="head">Data</p>
+                    <p class="head">Status</p>
+                    <p class="head">Cliente</p>
+                    <p class="head">TES - SOB - PÉ</p>
+                    
+                    {#each data.bookings as row, i}
+                    <p class={i % 2 ? "odd" : "even"}>{util.parseDate(row.date)}</p>
+                    <p class={i % 2 ? "odd" : "even"}>{row.status}</p>
+                    <p class={i % 2 ? "odd" : "even"}>{row.customer.split("-")[0] ? row.customer.split("-")[0] : "-"}</p>
+                    <div class="espec {i % 2 ? "odd" : "even"}">{@html util.parseEspec(row.corteJSON)}</div>
                     {/each}
                 </div>
                 {/if}
@@ -96,20 +91,21 @@
 </section>
 
 <style>
-    .wrapper {
+    .container {
+        width: 100%;
         margin: 1em 0;
+
         display: flex;
         flex-flow: row wrap;
         justify-content: space-evenly;
         align-items: center;
-        width: 100%;
     }
     #bookingsCreate {
+        max-width: 100%;
+
         display: flex;
         align-items: center;
         flex-flow: column;
-
-        max-width: 100%;
     }
     h1,h2 {
         margin: 1em;
@@ -117,23 +113,23 @@
     }
 
     /* Table Custom */
-    .overflowContainer {
-        display: flex;
-        overflow: auto;
-
-        padding: .5em;
-        max-width: 95vw;
+    .overflowWrapper {
         max-height: 70vh;
-    }
-    .table {
-        display: flex;
-        min-height: min-content;
-        min-width: 600px;
-        flex-flow: column;
-        
-        background-color: rgb(230,230,230);
+        max-width: 95vw;
+        overflow: auto;
         padding: .5em;
         border-radius: .5em;
+        
+        background-color: rgb(230,230,230);
+    }
+    .table {
+        min-width: 600px;
+        min-height: min-content;
+        padding: .5em;
+
+        display: flex;
+        flex-flow: column;
+        
         text-align: center;
     }
     #previewTable {
@@ -143,13 +139,13 @@
         max-width: 100%;
         margin: .5em 0;
     }
-    .table p {
+    .table p, .table div {
         padding: 0.4em;
         border: 2px solid black;
     }
-    .row {
-        display: flex;
-        flex-flow: row;
+    .tableContent {
+        display: grid;
+        grid-template-columns: 30% 10% 30% 30%;
     }
     .espec {
         display: flex;
@@ -157,9 +153,9 @@
         justify-content: space-around;
     }
     /* Color Code */
-    .thead { background-color: rgb(100, 140, 100); }
-    .tbody .row:nth-child(odd) { background-color: rgb(230,230,230); }
-    .tbody .row:nth-child(even) { background-color: rgb(210,210,210); }
+    .tableContent .head { background-color: rgb(100, 140, 100); }
+    .tableContent .odd { background-color: rgb(230,230,230); }
+    .tableContent .even { background-color: rgb(210,210,210); }
 
     form label {
         width: 100%;
