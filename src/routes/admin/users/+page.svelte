@@ -4,35 +4,31 @@
 
 <section>
     <h2>Usuários</h2>
-    <div class="wrapper">
-        <div class="overflowContainer">
-            <div class="table" id="loginTable">
+    <div class="container">
+        <div class="overflowWrapper">
+            <div class="table">
                 <div class="caption">
                     Total de usuários registrados: {data.users.length}
                 </div>
                 {#if data.users.length}
-                <div class="thead">
-                    <div class="row">
-                        <p style="width: 25%;">Nome</p>
-                        <p style="width: 12.5%;">Turma</p>
-                        <p style="width: 12.5%;">Cargo</p>
-                        <p style="width: 50%;">E-mail</p>
-                    </div>
-                </div>
-                <div class="tbody">
-                    {#each data.users as user}
-                    <div class="row">
-                        <p style="width: 25%;">{user.nome}</p>
-                        <p style="width: 12.5%;">{user.turma}</p>
-                        <p style="width: 12.5%;">{user.role}</p>
-                        <p style="width: 50%;">{user.email}</p>
-                    </div>
+                <div class="tableContent" id="loginTable">
+                    <p class="head">Nome</p>
+                    <p class="head">Turma</p>
+                    <p class="head">Cargo</p>
+                    <p class="head">E-mail</p>
+
+                    {#each data.users as user, i}
+                    <p class={i % 2 ? "odd" : "even"}>{user.nome}</p>
+                    <p class={i % 2 ? "odd" : "even"}>{user.turma}</p>
+                    <p class={i % 2 ? "odd" : "even"}>{user.role}</p>
+                    <p class={i % 2 ? "odd" : "even"}>{user.email}</p>
                     {/each}
                 </div>
                 {/if}
             </div>
         </div>
-
+    </div>
+    <div class="container">
         <h2>Adicionar ao clube</h2>
         <form class="dataForm" method="POST" action="?/addClube">
             <label>Email:
@@ -49,26 +45,21 @@
             <button class="submitButton" type="submit">Adicionar</button>
         </form>
 
-        <div class="overflowContainer">
+        <div class="overflowWrapper">
             <div class="table">
                 <div class="caption">
                     Total de usuários do clube: {data.clube.length}
                 </div>
                 {#if data.clube.length}
-                <div class="thead">
-                    <div class="row">
-                        <p style="width: 50%;">Email</p>
-                        <p style="width: 25%;">Quantidade</p>
-                        <p style="width: 25%;">Sobrancelha?</p>
-                    </div>
-                </div>
-                <div class="tbody">
-                    {#each data.clube as user}
-                    <div class="row">
-                        <p style="width: 50%;">{user.email}</p>
-                        <p style="width: 25%;">{user.qtdcortes}</p>
-                        <p style="width: 25%;">{user.incluidosob}</p>
-                    </div>
+                <div class="tableContent" id="clubeTable">
+                    <p class="head">Email</p>
+                    <p class="head">Quantidade</p>
+                    <p class="head">Sobrancelha?</p>
+
+                    {#each data.clube as user, i}
+                    <p class={i % 2 ? "odd" : "even"}>{user.email}</p>
+                    <p class={i % 2 ? "odd" : "even"}>{user.qtdcortes}</p>
+                    <p class={i % 2 ? "odd" : "even"}>{user.incluidosob}</p>
                     {/each}
                 </div>
                 {/if}
@@ -78,13 +69,14 @@
 </section>
 
 <style>
-    .wrapper {
+    .container {
+        width: 100%;
         margin: 1em 0;
+
         display: flex;
         flex-flow: row wrap;
         justify-content: space-evenly;
         align-items: center;
-        width: 100%;
     }
     h2 {
         margin: 1em;
@@ -92,41 +84,42 @@
     }
 
     /* Table Custom */
-    .overflowContainer {
-        display: flex;
-        overflow: auto;
-
-        padding: .5em;
-        max-width: 95vw;
+    .overflowWrapper {
         max-height: 70vh;
+        max-width: 95vw;
+        overflow: auto;
+        padding: .5em;
+        
+        border-radius: .5em;
+        background: rgb(230, 230, 230);
     }
     .table {
-        display: flex;
-        min-height: min-content;
         min-width: 600px;
-        flex-flow: column;
-        
-        background-color: rgb(230,230,230);
+        min-height: min-content;
         padding: .5em;
-        border-radius: .5em;
+
+        display: flex;
+        flex-flow: column;
+
         text-align: center;
     }
     .table .caption {
         max-width: 100%;
         margin: .5em 0;
     }
-    .table p {
+    .table p, .table div {
         padding: 0.4em;
         border: 2px solid black;
     }
-    .row {
-        display: flex;
-        flex-flow: row;
+    .tableContent {
+        display: grid;
     }
+    #loginTable { grid-template-columns: 25% 12.5% 12.5% 50%; }
+    #clubeTable { grid-template-columns: 50% 20% 30%; }
     /* Color Code */
-    .thead { background-color: rgb(100, 140, 100); }
-    .tbody .row:nth-child(odd) { background-color: rgb(230,230,230); }
-    .tbody .row:nth-child(even) { background-color: rgb(210,210,210); }
+    .tableContent .head { background-color: rgb(100, 140, 100); }
+    .tableContent .odd { background-color: rgb(230,230,230); }
+    .tableContent .even { background-color: rgb(210,210,210); }
 
     form label {
         width: 100%;
