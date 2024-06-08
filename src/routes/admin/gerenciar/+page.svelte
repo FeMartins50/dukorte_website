@@ -29,11 +29,11 @@
     let profit = [];
 
     profit = data.bookings.filter(booking => (booking.date.substring(0, 8) >= monStr) && (booking.status));
-    // valueStr.substring(0, valueStr.length - 2) + "," + valueStr.substring(valueStr.length - 2)
+    // Number(monthProfit).toFixed(2).replace(".", ",")
     let monthProfit = 0;
     profit.filter(booking => booking.date.startsWith(monStr)).forEach(booking => monthProfit += booking.value);
     let lifeProfit = 0;
-    profit.forEach(booking => monthProfit += booking.value);
+    profit.forEach(booking => lifeProfit += booking.value);
     let meanMonthProfit = 0;
     let clubeSigners = data.clube.length;
     let clubeProfit = 0;
@@ -125,11 +125,11 @@
         <h3 class="infoSubtitle">Apenas cortes (sem contar clube)</h3>
         <div class="box">
             <p>Lucro do mês</p>
-            <p><strong>R${monthProfit}</strong></p>
+            <p><strong>R${Number(monthProfit/100).toFixed(2).replace(".", ",")}</strong></p>
         </div>
         <div class="box">
             <p>Lucro vitalício</p>
-            <p><strong>R${lifeProfit}</strong></p>
+            <p><strong>R${Number(lifeProfit/100).toFixed(2).replace(".", ",")}</strong></p>
         </div>
         <div class="box">
             <p>Lucro mensal médio</p>

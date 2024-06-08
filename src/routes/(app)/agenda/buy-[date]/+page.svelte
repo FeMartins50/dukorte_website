@@ -60,7 +60,7 @@
         {/if}
         {/if}
 
-        <h3>Valor total: R${total.toString().substring(0, total.toString().length - 2) + "," + total.toString().substring(total.toString().length - 2)}</h3>
+        <h3>Valor total: R${Number(total/100).toFixed(2).replace(".", ",")}</h3>
 
         <button class="submitButton" type="submit">Reservar Korte</button>
     </form>
