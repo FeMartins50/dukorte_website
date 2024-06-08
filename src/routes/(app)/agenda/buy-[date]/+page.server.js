@@ -26,22 +26,23 @@ export const actions = {
         const pezinho = data.get('pezinho') ? true : false;
         const quarto = data.get('quarto') ? data.get('quarto') : false;
 
-        bookings.prepareBooking (
-            params.date, 
-            locals.user.name+ "-" +locals.user.squad,
-            JSON.stringify({ tesoura: tesoura, sobrancelha: sobrancelha, pezinho: pezinho, quarto: quarto })
-        );
-
         const clubeInfo = clube.getClubeInfo(locals.user.email);
         let qtdcortes = 0, incluidosob = false;
         if (clubeInfo) {
             qtdcortes = clubeInfo.qtdcortes;
             incluidosob = clubeInfo.incluidosob;
         }
-        let value = (qtdcortes > 0 ? 0 : 13) + (tesoura ? 3 : 0) + (sobrancelha && !incluidosob ? 3 : 0) + (pezinho && !(qtdcortes > 0) ? 1 : 0);
+        let value = (qtdcortes ? 0 : 1300) + (tesoura ? 300 : 0) + (sobrancelha && (!incluidosob || !(qtdcortes > 0)) ? 300 : 0) + (pezinho && !(qtdcortes > 0) ? 100 : 0);
         if (clubeInfo) {
             clube.decrementCorte(locals.user.email);
         }
+
+        bookings.prepareBooking (
+            params.date, 
+            locals.user.name+ "-" +locals.user.squad,
+            JSON.stringify({ tesoura: tesoura, sobrancelha: sobrancelha, pezinho: pezinho, quarto: quarto }),
+            value
+        );
 
         if (value <= 0) {
             bookings.reserveBooking (params.date);

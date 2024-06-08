@@ -22,10 +22,10 @@ export function deleteBooking (date) {
     return 0;
 }
 // Updates booking as "Pending" (status = 1) IF status == 0;
-export function prepareBooking (date, customer, corteJSON) {
+export function prepareBooking (date, customer, corteJSON, value) {
     const isAvailable = sql.prepare("SELECT count(*) FROM bookings WHERE date = ? AND status = 0;").get(date)['count(*)'];
     if (isAvailable) {
-        sql.prepare("UPDATE bookings SET status = 1, customer = ?, corteJSON = ? WHERE date = ? AND status = 0;").run(customer, corteJSON, date);
+        sql.prepare("UPDATE bookings SET status = 1, customer = ?, corteJSON = ?, value = ? WHERE date = ? AND status = 0;").run(customer, corteJSON, value, date);
         return 1;
     }
     return 0;

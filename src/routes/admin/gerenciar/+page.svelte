@@ -1,5 +1,7 @@
 <script>
     import { createSchedule } from "./schedule";
+    import util from "$lib/util.js";
+
     export let data;
     let bookingPreview = {
         day: "",
@@ -11,7 +13,35 @@
     let processedPreview = [];
     $: processedPreview = createSchedule(bookingPreview.time, Number(bookingPreview.duration), Number(bookingPreview.pause), Number(bookingPreview.quantity))
     
-    import util from "$lib/util.js";
+    // Statistics Calculations
+    function calcBookingsProfit (bookings) {
+        let profit = 0;
+        for (let i = 0; i < bookings.length; i++) {
+            let qtdcortes = bookings[i].corteJSON.qtdcortes;
+            profit += 13 + (qtdcortes > 0 ? 0 : 13) + (tesoura ? 3 : 0) + (sobrancelha && !incluidosob && !(qtdcortes > 0) ? 3 : 0) + (pezinho && !(qtdcortes > 0) ? 1 : 0)
+        }
+
+        return 0;
+    }
+    
+    let date = new Date(new Date().getTime() - 3*60*60*1000);
+    let monStr = date.toISOString().substring(0, 8);
+    let profit = [];
+
+    profit = data.bookings.filter(booking => (booking.date.substring(0, 8) >= monStr) && (booking.status));
+    // valueStr.substring(0, valueStr.length - 2) + "," + valueStr.substring(valueStr.length - 2)
+    let monthProfit = 0;
+    profit.filter(booking => booking.date.startsWith(monStr)).forEach(booking => monthProfit += booking.value);
+    let lifeProfit = 0;
+    profit.forEach(booking => monthProfit += booking.value);
+    let meanMonthProfit = 0;
+    let clubeSigners = data.clube.length;
+    let clubeProfit = 0;
+    data.clube.forEach(user => { clubeProfit += user.incluidosob ? 37.99 : 32.99});
+    let monthCortes = data.bookings.filter(booking => (booking.status == 2) && (booking.date.substring(0, 8) >= monStr)).length;
+    let lifeCortes = data.bookings.filter(booking => booking.status == 2).length;
+    let meanMonthCortes = 0;
+    // End of Statistics calculations
 </script>
 
 <section>
@@ -42,23 +72,23 @@
         </div>
         <div id="bookingsCreate">
             <form class="dataForm" method="POST" action="?/create">
-                <label for="day">Dia dos cortes:
+                <label>Dia dos cortes:
                     <input bind:value={bookingPreview.day} type="date" name="day" required>
                 </label>
                 
-                <label for="time">Primeiro horário:
+                <label>Primeiro horário:
                     <input bind:value={bookingPreview.time} type="time" name="time" required>
                 </label>
 
-                <label for="duration">Duração (min):
+                <label>Duração (min):
                     <input bind:value={bookingPreview.duration} type="number" name="duration" required>
                 </label>
 
-                <label for="pause">Pausa (min):
+                <label>Pausa (min):
                     <input bind:value={bookingPreview.pause} type="number" name="pause" required>
                 </label>
 
-                <label for="quantity">Quantidade:
+                <label>Quantidade:
                     <input bind:value={bookingPreview.quantity} type="number" name="quantity" required>
                 </label>
 
@@ -86,7 +116,47 @@
                 {/if}
             </div>
         </div>
-    
+    </div>
+</section>
+
+<section>
+    <h1>Estatísticas</h1>
+    <div class="infoTable">
+        <h3 class="infoSubtitle">Apenas cortes (sem contar clube)</h3>
+        <div class="box">
+            <p>Lucro do mês</p>
+            <p><strong>R${monthProfit}</strong></p>
+        </div>
+        <div class="box">
+            <p>Lucro vitalício</p>
+            <p><strong>R${lifeProfit}</strong></p>
+        </div>
+        <div class="box">
+            <p>Lucro mensal médio</p>
+            <p><strong>R${meanMonthProfit}</strong></p>
+        </div>
+        <h3 class="infoSubtitle">Info do Clube</h3>
+        <div class="box">
+            <p>Assinantes</p>
+            <p><strong>{clubeSigners} assinante(s)</strong></p>
+        </div>
+        <div class="box">
+            <p>Lucro do clube</p>
+            <p><strong>R${clubeProfit}</strong></p>
+        </div>
+        <h3 class="infoSubtitle">Quantidade total de cortes</h3>
+        <div class="box">
+            <p>Cortes do mês</p>
+            <p><strong>{monthCortes} corte(s)</strong></p>
+        </div>
+        <div class="box">
+            <p>Cortes vitalício</p>
+            <p><strong>{lifeCortes} corte(s)</strong></p>
+        </div>
+        <div class="box">
+            <p>Quantidade mensal média</p>
+            <p><strong>{meanMonthCortes} c/mês</strong></p>
+        </div>
     </div>
 </section>
 
@@ -114,7 +184,7 @@
 
     /* Table Custom */
     .overflowWrapper {
-        max-height: 70vh;
+        max-height: 40vh;
         max-width: 95vw;
         overflow: auto;
         padding: .5em;
@@ -165,5 +235,33 @@
     }
     form input, form label {
         margin-bottom: 1em;
+    }
+
+    /* Second Section */
+    .infoTable {
+        width: 100%;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        row-gap: .5em;
+        column-gap: 1%;
+    }
+    .infoSubtitle {
+        grid-column: 1 / 4;
+    }
+    .infoTable .box {
+        max-width: 300px;
+        width: 100%;
+        padding: 5px;
+        border-radius: 5px;
+        
+        justify-self: center;
+        display: flex;
+        flex-flow: column;
+        justify-content: space-between;
+
+        background-color: rgba(130, 190, 250, 0.5);
+        box-shadow: 0 2px 2px rgba(80, 110, 150, 0.4);
+        text-align: center;
     }
 </style>

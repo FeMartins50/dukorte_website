@@ -16,7 +16,7 @@
         qtdcortes = data.clubeInfo.qtdcortes;
         incluidosob = data.clubeInfo.incluidosob;
     }
-    $: total = (qtdcortes ? 0 : 13) + (tes ? 3 : 0) + (sob && !incluidosob ? 3 : 0) + (pez && !(qtdcortes > 0) ? 1 : 0);
+    $: total = (qtdcortes ? 0 : 1300) + (tes ? 300 : 0) + (sob && (!incluidosob || !(qtdcortes > 0)) ? 300 : 0) + (pez && !(qtdcortes > 0) ? 100 : 0);
 
 </script>
 
@@ -60,7 +60,7 @@
         {/if}
         {/if}
 
-        <h3>Valor total: R${total},00</h3>
+        <h3>Valor total: R${total.toString().substring(0, total.toString().length - 2) + "," + total.toString().substring(total.toString().length - 2)}</h3>
 
         <button class="submitButton" type="submit">Reservar Korte</button>
     </form>

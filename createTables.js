@@ -4,12 +4,13 @@ const sql = new SQLite("./db.sqlite");
 // Criar uma table de nome 'bookings'
 const table1 = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='bookings';").get();
 if (!table1['count(*)']) {
-    sql.prepare("CREATE TABLE bookings (date TEXT UNIQUE, status INT, customer TEXT, corteJSON TEXT);").run();
+    sql.prepare("CREATE TABLE bookings (date TEXT UNIQUE, status INT, customer TEXT, corteJSON TEXT, value INT);").run();
 }
-// (day-time, status, customer, corteJSON)
+// (day-time, status, customer, corteJSON, value)
 // status = ["Disponível", "Pendente", "Reservado"]; 0 1 e 2
-// 2024-03-15+10:20+10:40, Reservado, FERNANDO-CVK, {tesoura <bool>, sobrancelha <bool>, pezinho <bool>, quarto <int>})
+// 2024-03-15+10:20+10:40, Reservado, FERNANDO-CVK, {tesoura <bool>, sobrancelha <bool>, pezinho <bool>, quarto <int>}), 1300
 // day-month-year-start-end
+// value in cents
 
 // Criar uma table de nome 'users'
 const table2 = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='users';").get();

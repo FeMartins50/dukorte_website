@@ -44,7 +44,7 @@
         </div> -->
         <div class="listItem">
             <p>Valor:</p>
-            <p>R${debt.value},00</p>
+            <p>R${debt.value.toString().substring(0, debt.value.toString().length - 2) + "," + debt.value.toString().substring(debt.value.toString().length - 2)}</p>
         </div>
         <form class="dataForm" encType="multipart/form-data" method="POST" action="?/saveVoucher">
             <input type="hidden" value={debt.date} name="date">

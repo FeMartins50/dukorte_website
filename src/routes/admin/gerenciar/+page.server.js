@@ -1,20 +1,5 @@
-import { createBooking, getBookings } from '$lib/server/bookings.js';
+import { createBooking } from '$lib/server/bookings.js';
 import { createSchedule } from "./schedule";
-
-export const load = async () => {
-    let sortedBookings = [];
-    try {
-        const bookings = await getBookings();
-        sortedBookings = sortBookings(bookings);
-    } catch (e) {
-        console.log("==Erro carregando dados de bookings - Admin==");
-        console.error(e);
-    }
-    
-    return {
-        bookings: sortedBookings
-    }
-}
 
 export const actions = {
     create: async ({ request }) => {
@@ -35,20 +20,4 @@ export const actions = {
         }
         return { status: 1 };
     }
-}
-
-function sortBookings (bookings) {
-    let sorted = bookings;
-    let back, next;
-    for (let i = 0; i < bookings.length; i++) {
-        for (let j = 0; j < (bookings.length - 1); j++) {
-            back = sorted[j];
-            next = sorted[j + 1];
-            if (back.date < next.date) {
-                sorted[j] = next;
-                sorted[j + 1] = back;
-            }
-        }
-    }
-    return sorted;
 }
