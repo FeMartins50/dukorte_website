@@ -85,7 +85,7 @@
 
     /* Table Custom */
     .overflowWrapper {
-        max-height: 70vh;
+        max-height: 40vh;
         max-width: 95vw;
         overflow: auto;
         padding: .5em;

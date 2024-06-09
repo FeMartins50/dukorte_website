@@ -11,18 +11,7 @@
         quantity: 0
     };
     let processedPreview = [];
-    $: processedPreview = createSchedule(bookingPreview.time, Number(bookingPreview.duration), Number(bookingPreview.pause), Number(bookingPreview.quantity))
-    
-    // Statistics Calculations
-    function calcBookingsProfit (bookings) {
-        let profit = 0;
-        for (let i = 0; i < bookings.length; i++) {
-            let qtdcortes = bookings[i].corteJSON.qtdcortes;
-            profit += 13 + (qtdcortes > 0 ? 0 : 13) + (tesoura ? 3 : 0) + (sobrancelha && !incluidosob && !(qtdcortes > 0) ? 3 : 0) + (pezinho && !(qtdcortes > 0) ? 1 : 0)
-        }
-
-        return 0;
-    }
+    $: processedPreview = createSchedule(bookingPreview.time, Number(bookingPreview.duration), Number(bookingPreview.pause), Number(bookingPreview.quantity));
     
     let date = new Date(new Date().getTime() - 3*60*60*1000);
     let monStr = date.toISOString().substring(0, 8);
@@ -49,12 +38,12 @@
     <h2>Horários</h2>
     <div class="container">
         <div class="overflowWrapper">
-            <div class="table" id="bookingsTable">
+            <div class="table">
                 <div class="caption">
                     Total de cortes registrados: {data.bookings.length}
                 </div>
                 {#if data.bookings.length}
-                <div class="tableContent">
+                <div class="tableContent" id="bookingsTable">
                     <p class="head">Data</p>
                     <p class="head">Status</p>
                     <p class="head">Cliente</p>
@@ -94,23 +83,18 @@
 
                 <button class="submitButton" type="submit">Marcar Horários</button>
             </form>
-            <div class="table" id="previewTable">
+            <div class="table">
                 <div class="caption">
                     Cortes previstos: {processedPreview.length}
                 </div>
                 {#if processedPreview.length}
-                <div class="thead">
-                    <div class="row">
-                        <p style="width: 50%;">Início</p>
-                        <p style="width: 50%;">Fim</p>
-                    </div>
-                </div>
-                <div class="tbody">
-                    {#each processedPreview as row}
-                    <div class="row">
-                        <p style="width: 50%;">{row.start}</p>
-                        <p style="width: 50%;">{row.end}</p>
-                    </div>
+                <div class="tableContent" id="previewTable">
+                    <p class="head">Início</p>
+                    <p class="head">Fim</p>
+
+                    {#each processedPreview as row, i}
+                    <p class={i % 2 ? "odd" : "even"}>{row.start}</p>
+                    <p class={i % 2 ? "odd" : "even"}>{row.end}</p>
                     {/each}
                 </div>
                 {/if}
@@ -202,9 +186,6 @@
         
         text-align: center;
     }
-    #previewTable {
-        min-width: 300px;
-    }
     .table .caption {
         max-width: 100%;
         margin: .5em 0;
@@ -215,6 +196,11 @@
     }
     .tableContent {
         display: grid;
+    }
+    #previewTable {
+        grid-template-columns: 50% 50%;
+    }
+    #bookingsTable {
         grid-template-columns: 30% 10% 30% 30%;
     }
     .espec {
