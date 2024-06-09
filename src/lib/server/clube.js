@@ -1,15 +1,35 @@
 import SQLite from 'better-sqlite3';
 const sql = new SQLite("./db.sqlite");
 
-// TEMPORARY | Deletes from database and inserts it back with specified properties;
-export function resetCortes (email, qtdcortes, incluidosob) {
+// Adds clube member
+export function addMember (email, qtdcortes, incluidosob) {
     try {
-        sql.prepare("DELETE FROM clube WHERE email = ?;").run(email);
         sql.prepare("INSERT INTO clube (email, qtdcortes, incluidosob) VALUES (?, ?, ?);").run(email, qtdcortes, incluidosob);
         return 1;
     } catch (e) {
-        console.log("== ERROR WHILE RESETTING CLUBE == " + email);
+        console.log("== ERROR WHILE ADDING INTO CLUBE == " + email);
         console.error(e);
+        return -1;
+    }
+}
+// Deletes clube member;
+export function deleteMember (email) {
+    try {
+        sql.prepare("DELETE FROM clube WHERE email = ?;").run(email);
+        return 1;
+    } catch (e) {
+        console.log("== ERROR WHILE DELETING FROM CLUBE == " + email);
+        console.error(e);
+        return -1;
+    }
+}
+// Resets qtdcortes and incluidosob
+export function resetMember (email, qtdcortes) {
+    try {
+        sql.prepare("UPDATE clube SET qtdcortes = ? WHERE email = ?;").run(qtdcortes, email);
+        return 1;
+    } catch (e) {
+        console.log("== ERROR WHILE RESETING MEMBER FROM CLUBE == " + email);
         return -1;
     }
 }
@@ -19,6 +39,7 @@ export function decrementCorte (email) {
         const info = sql.prepare("SELECT * FROM clube WHERE email = ?;").get(email);
         if (info.qtdcortes <= 0) return 0;
         sql.prepare("UPDATE clube SET qtdcortes = ? WHERE email = ?;").run(info.qtdcortes - 1, email);
+        return 1;
     } catch (e) {
         console.log("== ERROR WHILE UPDATING CLUBE == " + email);
         console.error(e);
