@@ -17,7 +17,7 @@
     let monStr = date.toISOString().substring(0, 8);
     let profit = [];
 
-    profit = data.bookings.filter(booking => (booking.date.substring(0, 8) >= monStr) && (booking.status));
+    profit = data.bookings.filter(booking => (booking.date.substring(0, 8) >= monStr) && (booking.status == 2));
     // Number(monthProfit).toFixed(2).replace(".", ",")
     let monthProfit = 0;
     profit.filter(booking => booking.date.startsWith(monStr)).forEach(booking => monthProfit += booking.value);
