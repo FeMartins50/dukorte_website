@@ -52,7 +52,7 @@
 
         {#if data.clubeInfo}
         <p style="color: red">O clube pode cobrir mais {data.clubeInfo.qtdcortes} corte(s).</p>
-        {#if data.clubeInfo.incluidosob}
+        {#if data.clubeInfo.incluidosob && data.clubeInfo.qtdcortes > 0}
         <p style="color: red; text-align: center">Se deseja sobrancelha, marque a opção "Sobrancelha?". Sua inscrição no clube te isenta de pagá-la.</p>
         {/if}
         {#if data.clubeInfo.qtdcortes > 0}
