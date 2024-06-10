@@ -72,7 +72,7 @@
                         </label>
                         <p class={i % 2 ? "odd" : "even"}>{user.email}</p>
                         <p class={i % 2 ? "odd" : "even"}>{user.qtdcortes}</p>
-                        <p class={i % 2 ? "odd" : "even"}>{user.incluidosob ? "SIM" : "NAO"}</p>
+                        <p class={i % 2 ? "odd" : "even"}>{user.incluidosob == "true" ? "SIM" : "NAO"}</p>
                         {/each}
                     </div>
                     {/if}
