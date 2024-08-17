@@ -1,4 +1,5 @@
 import { getUserBySession } from "$lib/server/login.js";
+import { writeFileSync } from "fs";
 
 export async function handle({ event, resolve }) {
     const sessionid = event.cookies.get('sessionid');
@@ -20,12 +21,20 @@ export async function handle({ event, resolve }) {
 }
 
 export async function handleError({ error, event, status }) {
-    console.log("==Erro inesperado==");
-    console.log(error);
-    console.log("==Erro inesperado==");
+    const errorId = crypto.randomUUID();
+    let date = new Date().toISOString();
+
+    let fileName = date.split("T")[0] + "-" + errorId.toString();
+    let content = "Status Code: " + status + "\n";
+    content += "Error ID: " + errorId + "\n";
+    content += "Event: " + "\n" + event + "\n";
+    content += "Description: " + "\n" + error + "\n";
+    writeFileSync(`./error_logs/${fileName}.txt`, content);
+    console.log("Logged Error: " + errorId);
 
 	return {
-		message: error.message,
+		message: "Whoops! Bugou tudo.",
+        id: errorId,
         status: status
 	};
 }
