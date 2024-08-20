@@ -1,8 +1,8 @@
 import { registerUser, isNameAndSquadAvailable, isEmailAvailable, deletePendingEmail } from "$lib/server/login.js";
 import { registerUUID, deleteUUIDsByEmail } from "$lib/server/validation.js";
 import { redirect } from '@sveltejs/kit';
-import nodemailer from 'nodemailer';
-import { GMAIL_APP_PASSWORD } from '$env/static/private';
+// import nodemailer from 'nodemailer';
+// import { GMAIL_APP_PASSWORD } from '$env/static/private';
 
 export const load = async ({ locals }) => {
     // redirect user if logged in
@@ -53,7 +53,7 @@ export const actions = {
     }
 }
 
-const gmailpass = GMAIL_APP_PASSWORD.replaceAll("-", " ");
+/* const gmailpass = GMAIL_APP_PASSWORD.replaceAll("-", " ");
 async function sendEmail(recipients, emailSubject, emailBody) {
     try {
         const transporter = nodemailer.createTransport({
@@ -77,4 +77,4 @@ async function sendEmail(recipients, emailSubject, emailBody) {
     } catch (error) {
         console.error('Error occurred:', error);
     }
-}
+} */
